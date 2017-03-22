@@ -37,17 +37,17 @@ install:
 - export NUMCORES=`grep -c ^processor /proc/cpuinfo` && if [ ! -n "$NUMCORES" ]; then export NUMCORES=`sysctl -n hw.ncpu`; fi
 - echo Using $NUMCORES cores
 # Install dependencies
-- sudo chroot /opt/trusty /usr/bin/env -i NUMCORES=1 /bin/bash -c '/opt/trusty/travis.install_boost.sh'
+- sudo chroot /opt/trusty /usr/bin/env -i NUMCORES=1 /bin/bash -c '/opt/trusty/cryfs/travis.install_boost.sh'
 # Install run_with_fuse.sh
-- sudo chroot /opt/trusty /bin/bash -c 'mkdir /opt/trusty/cmake'
+- sudo chroot /opt/trusty /bin/bash -c 'mkdir /opt/trusty/cryfs/cmake'
 #- cd cmake
-- chroot /opt/trusty /bin/bash -c 'cd /opt/trusty/cmake; wget https://raw.githubusercontent.com/smessmer/travis-utils/master/run_with_fuse.sh'
-- chroot /opt/trusty /bin/bash -c 'chmod +x run_with_fuse.sh'
-- chroot /opt/trusty /bin/bash -c 'cmake --version'
+- chroot /opt/trusty /bin/bash -c 'cd /opt/trusty/cryfs/cmake; wget https://raw.githubusercontent.com/smessmer/travis-utils/master/run_with_fuse.sh'
+- chroot /opt/trusty /bin/bash -c 'cd /opt/trusty/cryfs/cmake; chmod +x run_with_fuse.sh'
+- chroot /opt/trusty /bin/bash -c 'cd /opt/trusty/cryfs/cmake; cmake --version'
 #  Use /dev/urandom when /dev/random is accessed, because travis doesn't have enough entropy
 - chroot /opt/trusty /bin/bash -c 'cp -a /dev/urandom /dev/random'
 script:
-- chroot /opt/trusty /bin/bash -c 'cd /opt/trusty/cmake; cmake .. -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING=off; make'
+- chroot /opt/trusty /bin/bash -c 'cd /opt/trusty/cryfs/cmake; cmake .. -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING=off; make'
 #- make -j$NUMCORES
 #- ./test/gitversion/gitversion-test
 #- ./test/cpp-utils/cpp-utils-test
