@@ -27,30 +27,28 @@ before_install:
 - sudo mount -o bind /sys  /opt/trusty/sys
 - sudo cp apt.sources /opt/trusty/etc/apt/sources.list
 install:
-- sudo chroot /opt/trusty
 #- echo "deb http://apt.llvm.org/precise/ llvm-toolchain-precise-3.7 main" | sudo tee -a /etc/apt/sources.list > /dev/null
 #- apt-add-repository -y "ppa:ubuntu-toolchain-r/test"
-- apt-get update
-- apt-get install -y clang-3.7 libcrypto++-dev libfuse-dev
-- cd /opt/cryfs
+- sudo chroot /opt/trusty /bin/bash -c 'apt-get update'
+- sudo chroot /opt/trusty /bin/bash -c 'apt-get install -y clang-3.7 libcrypto++-dev libfuse-dev'
 # Use new clang
 - export CXX="clang++-3.7" CC="clang-3.7"
 # Detect number of CPU cores
 - export NUMCORES=`grep -c ^processor /proc/cpuinfo` && if [ ! -n "$NUMCORES" ]; then export NUMCORES=`sysctl -n hw.ncpu`; fi
 - echo Using $NUMCORES cores
 # Install dependencies
-- ./travis.install_boost.sh
+- sudo chroot /opt/trusty /usr/bin/env -i NUMCORES=1 /bin/bash -c '/opt/trusty/travis.install_boost.sh'
 # Install run_with_fuse.sh
-- mkdir cmake
-- cd cmake
-- wget https://raw.githubusercontent.com/smessmer/travis-utils/master/run_with_fuse.sh
-- chmod +x run_with_fuse.sh
-- cmake --version
+- sudo chroot /opt/trusty /bin/bash -c 'mkdir /opt/trusty/cmake'
+#- cd cmake
+- chroot /opt/trusty /bin/bash -c 'cd /opt/trusty/cmake; wget https://raw.githubusercontent.com/smessmer/travis-utils/master/run_with_fuse.sh'
+- chroot /opt/trusty /bin/bash -c 'chmod +x run_with_fuse.sh'
+- chroot /opt/trusty /bin/bash -c 'cmake --version'
 #  Use /dev/urandom when /dev/random is accessed, because travis doesn't have enough entropy
-- sudo cp -a /dev/urandom /dev/random
+- chroot /opt/trusty /bin/bash -c 'cp -a /dev/urandom /dev/random'
 script:
-- cmake .. -DBUILD_TESTING=on -DCMAKE_BUILD_TYPE=Debug
-- make -j$NUMCORES
+- chroot /opt/trusty /bin/bash -c 'cd /opt/trusty/cmake; cmake .. -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING=off; make'
+#- make -j$NUMCORES
 #- ./test/gitversion/gitversion-test
 #- ./test/cpp-utils/cpp-utils-test
 # TODO Also run on osx once fixed
