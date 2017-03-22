@@ -17,14 +17,19 @@ addons:
     - debootstrap
     - qemu-user-static
 before_install:
-- mkdir -p target/opt/cryfs
-- cp -R . target/opt/cryfs
-- sudo debootstrap --variant=buildd --arch armhf trusty trusty http://ports.ubuntu.com
+- mkdir -p /opt/trusty/opt/cryfs
+- cp -R . /opt/trusty/opt/cryfs
+- sudo debootstrap --variant=buildd --arch armhf trusty /opt/trusty http://ports.ubuntu.com
 - sudo mount -o bind /dev  trusty/dev
 - sudo mount -o bind /proc trusty/proc
 - sudo mount -o bind /sys  trusty/sys
+- sudo cp apt.sources /opt/trusty/etc/apt/sources.list
 install:
-- sudo chroot trusty
+- sudo chroot /opt/trusty
+- echo "deb http://apt.llvm.org/precise/ llvm-toolchain-precise-3.7 main" | sudo tee -a /etc/apt/sources.list > /dev/null
+- apt-add-repository -y "ppa:ubuntu-toolchain-r/test"
+- apt-get update
+- apt-get install -y clang-3.7 libcrypto++-dev libfuse-dev
 - cd /opt/cryfs
 # Use new clang
 - export CXX="clang++-3.7" CC="clang-3.7"
