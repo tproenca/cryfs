@@ -22,14 +22,14 @@ before_install:
 - mkdir -p /opt/trusty/opt/cryfs
 - cp -R . /opt/trusty/opt/cryfs
 - sudo debootstrap --variant=buildd --arch armhf trusty /opt/trusty http://ports.ubuntu.com
-- sudo mount -o bind /dev  trusty/dev
-- sudo mount -o bind /proc trusty/proc
-- sudo mount -o bind /sys  trusty/sys
+#- sudo mount -o bind /dev  trusty/dev
+#- sudo mount -o bind /proc trusty/proc
+#- sudo mount -o bind /sys  trusty/sys
 - sudo cp apt.sources /opt/trusty/etc/apt/sources.list
 install:
 - sudo chroot /opt/trusty
-- echo "deb http://apt.llvm.org/precise/ llvm-toolchain-precise-3.7 main" | sudo tee -a /etc/apt/sources.list > /dev/null
-- apt-add-repository -y "ppa:ubuntu-toolchain-r/test"
+#- echo "deb http://apt.llvm.org/precise/ llvm-toolchain-precise-3.7 main" | sudo tee -a /etc/apt/sources.list > /dev/null
+#- apt-add-repository -y "ppa:ubuntu-toolchain-r/test"
 - apt-get update
 - apt-get install -y clang-3.7 libcrypto++-dev libfuse-dev
 - cd /opt/cryfs
@@ -51,15 +51,15 @@ install:
 script:
 - cmake .. -DBUILD_TESTING=on -DCMAKE_BUILD_TYPE=Debug
 - make -j$NUMCORES
-- ./test/gitversion/gitversion-test
-- ./test/cpp-utils/cpp-utils-test
+#- ./test/gitversion/gitversion-test
+#- ./test/cpp-utils/cpp-utils-test
 # TODO Also run on osx once fixed
-- ./run_with_fuse.sh ./test/fspp/fspp-test || exit 1
-- ./test/parallelaccessstore/parallelaccessstore-test
-- ./test/blockstore/blockstore-test
-- ./test/blobstore/blobstore-test
+#- ./run_with_fuse.sh ./test/fspp/fspp-test || exit 1
+#- ./test/parallelaccessstore/parallelaccessstore-test
+#- ./test/blockstore/blockstore-test
+#- ./test/blobstore/blobstore-test
 # TODO Also run on osx once fixed
-- ./test/cryfs/cryfs-test || exit 1
-- ./test/cryfs-cli/cryfs-cli-test || exit 1
+#- ./test/cryfs/cryfs-test || exit 1
+#- ./test/cryfs-cli/cryfs-cli-test || exit 1
 after_script:
-- rm run_with_fuse.sh
+#- rm run_with_fuse.sh
