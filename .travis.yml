@@ -17,6 +17,8 @@ addons:
     - debootstrap
     - qemu-user-static
 before_install:
+- mkdir -p /opt/trusty/usr/bin
+- cp /usr/bin/qemu-arm-static /opt/trusty/usr/bin
 - mkdir -p /opt/trusty/opt/cryfs
 - cp -R . /opt/trusty/opt/cryfs
 - sudo debootstrap --variant=buildd --arch armhf trusty /opt/trusty http://ports.ubuntu.com
