@@ -1,0 +1,15 @@
+deb http://ports.ubuntu.com/ubuntu-ports/ trusty main universe restricted
+deb-src http://ports.ubuntu.com/ubuntu-ports/ trusty main universe restricted
+
+deb http://ports.ubuntu.com/ubuntu-ports/ trusty-updates main universe restricted
+deb-src http://ports.ubuntu.com/ubuntu-ports/ trusty-updates main universe restricted
+
+deb http://ports.ubuntu.com/ubuntu-ports/ trusty-backports main restricted
+deb-src http://ports.ubuntu.com/ubuntu-ports/ trusty-backports main restricted
+
+deb http://ports.ubuntu.com/ubuntu-ports/ trusty-security main restricted
+deb-src http://ports.ubuntu.com/ubuntu-ports/ trusty-security main restricted
+deb http://ports.ubuntu.com/ubuntu-ports/ trusty-security universe
+deb-src http://ports.ubuntu.com/ubuntu-ports/ trusty-security universe
+deb http://ports.ubuntu.com/ubuntu-ports/ trusty-security multiverse
+deb-src http://ports.ubuntu.com/ubuntu-ports/ trusty-security multiverse
