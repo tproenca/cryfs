@@ -22,9 +22,9 @@ before_install:
 - mkdir -p /opt/trusty/opt/cryfs
 - cp -R . /opt/trusty/opt/cryfs
 - sudo debootstrap --variant=buildd --arch armhf trusty /opt/trusty http://ports.ubuntu.com
-#- sudo mount -o bind /dev  trusty/dev
-#- sudo mount -o bind /proc trusty/proc
-#- sudo mount -o bind /sys  trusty/sys
+- sudo mount -o bind /dev  /opt/trusty/dev
+- sudo mount -o bind /proc /opt/trusty/proc
+- sudo mount -o bind /sys  /opt/trusty/sys
 - sudo cp apt.sources /opt/trusty/etc/apt/sources.list
 install:
 - sudo chroot /opt/trusty
